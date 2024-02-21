@@ -1,5 +1,7 @@
 package com.emp.dto;
 
+import com.emp.entity.Department;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,5 @@ public class EmpDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private Long departmentID;
 }
