@@ -78,23 +78,23 @@ const EmployeeAdd = () => {
                         <div className="mb-3">
                             <label htmlFor="firstName" className="form-label">First Name</label>
                             <input type="text" 
-                                className={`form-control ${errors.firstNameError !== '' ? 'invalid' : ''}`} 
+                                className={`form-control ${errors.firstNameError !== '' ? 'is-invalid' : ''}`} 
                             id="firstName" value={firstName} onChange={handleFirstNameChange} />
-                            {errors.firstNameError !== '' && <div className="text-danger">{errors.firstNameError}</div>}
+                            {errors.firstNameError !== '' && <div className="invalid-feedback">{errors.firstNameError}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="lastName" className="form-label">Last Name</label>
                             <input type="text" 
-                                className={`form-control ${errors.lastNameError !== '' ? 'invalid' : ''}`}  
+                                className={`form-control ${errors.lastNameError !== '' ? 'is-invalid' : ''}`}  
                             id="lastName" value={lastName} onChange={handleLastNameChange} />
-                            {errors.lastNameError !== '' && <div className="text-danger">{errors.lastNameError}</div>}
+                            {errors.lastNameError !== '' && <div className="invalid-feedback">{errors.lastNameError}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
                             <input type="email" 
-                                className={`form-control ${errors.emailError !== '' ? 'invalid' : ''}`} 
+                                className={`form-control ${errors.emailError !== '' ? 'is-invalid' : ''}`} 
                             id="email" value={email} onChange={handleEmailChange} />
-                            {errors.emailError !== '' && <div className="text-danger">{errors.emailError}</div>}
+                            {errors.emailError !== '' && <div className="invalid-feedback">{errors.emailError}</div>}
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
