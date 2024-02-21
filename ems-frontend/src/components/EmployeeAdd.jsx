@@ -8,6 +8,38 @@ const EmployeeAdd = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+
+    // these are error messages
+    const [errors, setErrors] = useState(
+        {
+            firstNameError : '',
+            lastNameError : '',
+            emailError :''
+        })
+
+    function validateForm()
+    {
+        var valid = true;
+        const errorsCopy = {...errors};
+        if(firstName.trim() != '')
+            errorsCopy.firstNameError = '';
+        else 
+            {errorsCopy.firstNameError = 'First Name is required';valid = false;}
+
+        if (lastName.trim() != '')
+            errorsCopy.lastNameError = '';
+        else
+            {errorsCopy.lastNameError = 'Last Name is required';valid = false;}
+
+        if (email.trim() != '')
+            errorsCopy.emailError = '';
+        else
+            {errorsCopy.emailError = 'Email is required';valid = false;}
+
+        setErrors(errorsCopy);
+        console.log(valid);
+        return valid;
+    }
   
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
@@ -23,11 +55,15 @@ const EmployeeAdd = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const e = {firstName,lastName,email}
-        console.log(e);
+       
 
-        Addemp(e);
-        nav('/');
+        if(validateForm()==true)
+        {
+            const e = { firstName, lastName, email }
+            console.log(e);
+            Addemp(e);
+            nav('/');
+        }
 
     };
 
@@ -41,15 +77,24 @@ const EmployeeAdd = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="firstName" className="form-label">First Name</label>
-                            <input type="text" className="form-control" id="firstName" value={firstName} onChange={handleFirstNameChange} />
+                            <input type="text" 
+                                className={`form-control ${errors.firstNameError !== '' ? 'invalid' : ''}`} 
+                            id="firstName" value={firstName} onChange={handleFirstNameChange} />
+                            {errors.firstNameError !== '' && <div className="text-danger">{errors.firstNameError}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="lastName" className="form-label">Last Name</label>
-                            <input type="text" className="form-control" id="lastName" value={lastName} onChange={handleLastNameChange} />
+                            <input type="text" 
+                                className={`form-control ${errors.lastNameError !== '' ? 'invalid' : ''}`}  
+                            id="lastName" value={lastName} onChange={handleLastNameChange} />
+                            {errors.lastNameError !== '' && <div className="text-danger">{errors.lastNameError}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="email" value={email} onChange={handleEmailChange} />
+                            <input type="email" 
+                                className={`form-control ${errors.emailError !== '' ? 'invalid' : ''}`} 
+                            id="email" value={email} onChange={handleEmailChange} />
+                            {errors.emailError !== '' && <div className="text-danger">{errors.emailError}</div>}
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
