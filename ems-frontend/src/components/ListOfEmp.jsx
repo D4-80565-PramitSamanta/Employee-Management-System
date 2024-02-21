@@ -19,6 +19,10 @@ function ListOfEmp() {
     nav('/add');
   }
 
+  function handleUpdate(id)
+  {
+    nav(`/edit/${id}`);
+  }
 
   return (
     <div>
@@ -36,6 +40,7 @@ function ListOfEmp() {
             emps.map(e=>
               <tr>
                 <th>{e.id}</th><th>{e.firstName}</th><th>{e.lastName}</th><th>{e.email}</th>
+                <th><button class="btn btn-info" onClick={()=>{handleUpdate(e.id)}}>Update</button></th>
               </tr>
               )
           }

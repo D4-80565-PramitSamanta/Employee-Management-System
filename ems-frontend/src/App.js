@@ -4,7 +4,7 @@ import ListOfEmp from './components/ListOfEmp';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
-import EmployeeAdd from './components/EmployeeAdd';
+import EmployeeAddorEdit from './components/EmployeeAddorEdit';
 
 function App() {
   return (
@@ -14,7 +14,8 @@ function App() {
         <Routes>
           <Route path='/' element = {<ListOfEmp/>}></Route>
           <Route path='/employees' element={<ListOfEmp />}></Route>
-          <Route path='/add' element={<EmployeeAdd />}></Route>
+          <Route path='/add' element={<EmployeeAddorEdit />}></Route>
+          <Route path='/edit/:id' element={<EmployeeAddorEdit />}></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

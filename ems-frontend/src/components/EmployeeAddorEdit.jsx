@@ -1,9 +1,27 @@
-import React, { useState } from 'react'
-import { Addemp } from '../services/EmpService';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Addemp, Getemp, Putemp } from '../services/EmpService';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const EmployeeAdd = () => {
+const EmployeeAddorEdit = () => {
+    const {id} = useParams();
+    useEffect(()=>{
+        if(id){
+            Getemp(id)
+            .then(res=>{setFirstName(res.data.firstName);
+                        setLastName(res.data.lastName);
+                        setEmail(res.data.email)})
+            .catch(error=>console.log(error));
+        }
+    },[id]);
+    function pageTitle()
+    {
+        if(id)
+            return <h2 className="text-center mb-4">Edit Employee</h2>
+        else
+            return <h2 className="text-center mb-4">Add New Employee</h2>
+    }
     const nav = useNavigate();
+
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -55,14 +73,17 @@ const EmployeeAdd = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-       
-
         if(validateForm()==true)
         {
-            const e = { firstName, lastName, email }
-            console.log(e);
-            Addemp(e);
-            nav('/');
+            const e = { firstName, lastName, email };
+            if(id)
+            {
+                Putemp(id,e).then(()=>nav('/'));
+            }
+            else
+            {
+                Addemp(e).then(() => nav('/'));
+            }
         }
 
     };
@@ -72,8 +93,12 @@ const EmployeeAdd = () => {
     return (
         <div className="container d-flex justify-content-center">
             <div className="col-md-6">
+                {
+                    // CURLY BRACKET TO DYNAMICALY ADD THE TITLE
+                    pageTitle() 
+                }
                 <div className="neon-border p-4">
-                    <h2 className="text-center mb-4">Add New Employee</h2>
+
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="firstName" className="form-label">First Name</label>
@@ -104,4 +129,4 @@ const EmployeeAdd = () => {
     );
 };
 
-export default EmployeeAdd
+export default EmployeeAddorEdit
