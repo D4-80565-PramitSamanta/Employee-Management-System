@@ -11,3 +11,6 @@ export const Getemp = (id) => axios.get(geturl + '/' + id);
 
 const puturl = 'http://localhost:8080/emp/edit';
 export const Putemp = (id, emp) => axios.put(puturl + '/' + id, emp);
+
+const delurl = 'http://localhost:8080/emp/delete';
+export const Delemp = (id) => axios.delete(delurl + '/' + id);

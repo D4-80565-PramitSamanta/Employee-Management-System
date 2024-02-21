@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Listofemps } from '../services/EmpService';
+import { Delemp, Listofemps } from '../services/EmpService';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function ListOfEmp() {
   const nav = useNavigate();
   const [emps,setEmps] = useState([]);
 
+  function fetchAllEmps()
+  {
+       Listofemps()
+      .then(response => { setEmps(response.data) })
+      .catch(error => { console.log(error) })
+  }
   useEffect(()=>
   {
-    Listofemps()
-    .then(response=>{setEmps(response.data)})
-    .catch(error=>{console.log(error)})
+    fetchAllEmps();
   },[])
 
   function addNewEmp()
@@ -22,6 +26,13 @@ function ListOfEmp() {
   function handleUpdate(id)
   {
     nav(`/edit/${id}`);
+  }
+
+  function handleDelete(id)
+  {
+    Delemp(id)
+    .then(response => { console.log(response.data); fetchAllEmps(); })
+    .catch(error => console.log(error));
   }
 
   return (
@@ -41,6 +52,7 @@ function ListOfEmp() {
               <tr>
                 <th>{e.id}</th><th>{e.firstName}</th><th>{e.lastName}</th><th>{e.email}</th>
                 <th><button class="btn btn-info" onClick={()=>{handleUpdate(e.id)}}>Update</button></th>
+                <th><button class="btn btn-danger" onClick={() => {handleDelete(e.id)}}>Delete</button></th>
               </tr>
               )
           }

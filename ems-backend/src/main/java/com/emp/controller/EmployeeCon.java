@@ -51,7 +51,7 @@ public class EmployeeCon {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<ApiResponse> deleteEmployee(@PathVariable long id) {
 		ApiResponse response =  eService.deleteEmployee(id);
 		return new ResponseEntity<>(response,HttpStatus.OK);
