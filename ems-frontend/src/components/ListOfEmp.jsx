@@ -43,14 +43,14 @@ function ListOfEmp() {
       <table className='table table-striped table-bordered'>
         <thead>
           <tr>
-            <th>ID</th><th>FirstName</th><th>LastName</th><th>Email</th>
+            <th>ID</th><th>FirstName</th><th>LastName</th><th>Email</th><th>Department</th>
           </tr>
         </thead>
         <tbody>
           {
             emps.map(e=>
               <tr>
-                <th>{e.id}</th><th>{e.firstName}</th><th>{e.lastName}</th><th>{e.email}</th>
+                <th>{e.id}</th><th>{e.firstName}</th><th>{e.lastName}</th><th>{e.email}</th><th>{e.departmentID}</th>
                 <th><button class="btn btn-info" onClick={()=>{handleUpdate(e.id)}}>Update</button></th>
                 <th><button class="btn btn-danger" onClick={() => {handleDelete(e.id)}}>Delete</button></th>
               </tr>
