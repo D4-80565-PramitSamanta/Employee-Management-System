@@ -55,3 +55,12 @@
   z-index: 1000;
   /* Set a high z-index to ensure it appears above other elements */
 }
+
+.neon-border {
+  border: 2px solid #00bfff;
+  /* Green neon color */
+  border-radius: 10px;
+  /* Rounded border */
+  box-shadow: 0 0 15px #6600ff;
+  /* Neon glow effect */
+}
