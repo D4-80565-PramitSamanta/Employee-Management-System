@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Addemp, Getemp, Putemp } from '../services/EmpService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ListOfDepartments } from '../services/DepService';
 
 const EmployeeAddorEdit = () => {
     const {id} = useParams();
@@ -27,12 +28,23 @@ const EmployeeAddorEdit = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
 
+    const [departmentID, setdepartmentID] = useState('');
+    const [departments, setdepartments] = useState([]);
+
+    useEffect(()=>
+    {
+        ListOfDepartments()
+        .then((res)=>{setdepartments(res.data); console.log(departments);})
+        .catch((error)=>{console.log(error)})
+    },[])
+
     // these are error messages
     const [errors, setErrors] = useState(
         {
             firstNameError : '',
             lastNameError : '',
-            emailError :''
+            emailError :'',
+            depError :''
         })
 
     function validateForm()
@@ -120,6 +132,21 @@ const EmployeeAddorEdit = () => {
                                 className={`form-control ${errors.emailError !== '' ? 'is-invalid' : ''}`} 
                             id="email" value={email} onChange={handleEmailChange} />
                             {errors.emailError !== '' && <div className="invalid-feedback">{errors.emailError}</div>}
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="department" className="form-label">Select Department</label>
+                            <select className={`form-control ${errors.depError ? 'is-invalid' : ''}`}
+                            value={departmentID}
+                            onChange={(e)=>setdepartmentID(e.target.value)}>
+                                <option value="">Select Department</option>
+                                {departments.map(department => (
+                                    <option key={department.id} value={department.id}>
+                                        {department.departmentName}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.depError !== '' && <div className='invalid-feedback'>{errors.depError}</div>}
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
