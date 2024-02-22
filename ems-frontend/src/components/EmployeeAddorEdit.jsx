@@ -10,7 +10,8 @@ const EmployeeAddorEdit = () => {
             Getemp(id)
             .then(res=>{setFirstName(res.data.firstName);
                         setLastName(res.data.lastName);
-                        setEmail(res.data.email)})
+                        setEmail(res.data.email);
+                        setdepartmentID(res.data.departmentID);})
             .catch(error=>console.log(error));
         }
     },[id]);
@@ -47,24 +48,38 @@ const EmployeeAddorEdit = () => {
             depError :''
         })
 
-    function validateForm()
-    {
+    function validateForm() {
         var valid = true;
-        const errorsCopy = {...errors};
-        if(firstName.trim() != '')
+        const errorsCopy = { ...errors };
+        if (firstName.trim() !== '')
             errorsCopy.firstNameError = '';
-        else 
-            {errorsCopy.firstNameError = 'First Name is required';valid = false;}
+        else {
+            errorsCopy.firstNameError = 'First Name is required';
+            valid = false;
+        }
 
-        if (lastName.trim() != '')
+        if (lastName.trim() !== '')
             errorsCopy.lastNameError = '';
-        else
-            {errorsCopy.lastNameError = 'Last Name is required';valid = false;}
+        else {
+            errorsCopy.lastNameError = 'Last Name is required';
+            valid = false;
+        }
 
-        if (email.trim() != '')
+        if (email.trim() !== '')
             errorsCopy.emailError = '';
-        else
-            {errorsCopy.emailError = 'Email is required';valid = false;}
+        else {
+            errorsCopy.emailError = 'Email is required';
+            valid = false;
+        }
+
+        if (departmentID){
+            errorsCopy.depError = '';
+        }
+     else 
+        {
+            errorsCopy.depError = 'Please select a department';
+            valid = false;
+        }
 
         setErrors(errorsCopy);
         console.log(valid);
@@ -87,7 +102,7 @@ const EmployeeAddorEdit = () => {
         event.preventDefault();
         if(validateForm()==true)
         {
-            const e = { firstName, lastName, email };
+            const e = { firstName, lastName, email, departmentID };
             if(id)
             {
                 Putemp(id,e).then(()=>nav('/'));
@@ -134,17 +149,16 @@ const EmployeeAddorEdit = () => {
                             {errors.emailError !== '' && <div className="invalid-feedback">{errors.emailError}</div>}
                         </div>
 
-                        <div className="mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="department" className="form-label">Select Department</label>
                             <select className={`form-control ${errors.depError ? 'is-invalid' : ''}`}
                             value={departmentID}
                             onChange={(e)=>setdepartmentID(e.target.value)}>
-                                <option value="">Select Department</option>
-                                {departments.map(department => (
+                                {departments.map(department =>
                                     <option key={department.id} value={department.id}>
                                         {department.departmentName}
                                     </option>
-                                ))}
+                            )}
                             </select>
                             {errors.depError !== '' && <div className='invalid-feedback'>{errors.depError}</div>}
                         </div>
